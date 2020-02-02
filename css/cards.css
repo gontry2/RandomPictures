@@ -1,0 +1,31 @@
+.cards {
+    position: relative;
+}
+
+.cards .cards__view {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cardImage {
+    width: max-content;
+    height: max-content;
+    margin: 20px 10px;
+    box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+}
+
+.status-bar {
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    top: 0px;
+    z-index: 1;
+    background-color: white;
+}
+
+.status-bar__column img {
+    width: 50px;
+}
