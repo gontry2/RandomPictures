@@ -4,12 +4,14 @@
 
 .cards .cards__view {
     margin-top: 50px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
 .cardImage {
+    cursor: pointer;
     width: max-content;
     height: max-content;
     margin: 20px 10px;
@@ -22,10 +24,12 @@
     justify-content: space-around;
     width: 100%;
     top: 0px;
+    padding: 10px;
     z-index: 1;
     background-color: white;
 }
 
 .status-bar__column img {
     width: 50px;
+    cursor: pointer;
 }
