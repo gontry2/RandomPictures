@@ -2,7 +2,9 @@ const cardsView = document.getElementById("js-cards__view");
 const goBeforePage = document.getElementById("js-goBeforePage");
 const goAfterPage = document.getElementById("js-goAfterPage");
 
-const IMG_NUMBER = 12;
+// 이미지 건수 수정하는 곳!!!
+const IMG_NUMBER = 14;
+
 const num = getParameterByName("num");
 var cards = [];
 var totalCards = new Array();
@@ -13,7 +15,12 @@ var imgOrText = false;
 function paintImage(imgNumber) {
     const image = new Image();
     image.src = `images/words/${imgNumber + 1}.jpg`;
-    console.log(image.src);
+    image.onerror = function() {
+        image.src = `images/words/${imgNumber + 1}.png`;
+        image.onerror = function() {
+            image.src = `images/words/${imgNumber + 1}.gif`;
+        };
+    };
     image.classList.add("cardImage");
     cardsView.appendChild(image);
 }
@@ -53,15 +60,27 @@ function removeChildren() {
 }
 
 function showCards() {
+    var onePageImagesCnt = num;
     totalCards[numberOfpages] = new Array();
     if (num == 0) {
         paintImage(seriesNum);
     } else {
-        while (totalCards[numberOfpages].length < num) {
-            const randomNumber = genRandom();
-            if (!sameNum(randomNumber)) {
-                paintImage(randomNumber);
-                totalCards[numberOfpages].push(randomNumber);
+        // 이미지가 홀수인 경우, 마지막 장의 이미지 갯수 제한
+        if (IMG_NUMBER % num !== 0 && numberOfpages == Math.floor(IMG_NUMBER / num)) {
+            while (totalCards[numberOfpages].length < IMG_NUMBER % num) {
+                const randomNumber = genRandom();
+                if (!sameNum(randomNumber)) {
+                    paintImage(randomNumber);
+                    totalCards[numberOfpages].push(randomNumber);
+                }
+            }
+        } else {
+            while (totalCards[numberOfpages].length < onePageImagesCnt) {
+                const randomNumber = genRandom();
+                if (!sameNum(randomNumber)) {
+                    paintImage(randomNumber);
+                    totalCards[numberOfpages].push(randomNumber);
+                }
             }
         }
     }
@@ -76,7 +95,7 @@ function getParameterByName(name) {
 
 goAfterPage.onclick = function() {
     numberOfpages++;
-    if (numberOfpages === IMG_NUMBER / num || seriesNum == IMG_NUMBER - 1) {
+    if (numberOfpages >= IMG_NUMBER / num || seriesNum >= IMG_NUMBER - 1) {
         numberOfpages--;
         alert("마지막장 입니다.");
     } else {
@@ -98,7 +117,7 @@ goAfterPage.onclick = function() {
 
 goBeforePage.onclick = function() {
     numberOfpages--;
-    if (numberOfpages <= 0) {
+    if (numberOfpages <= -1) {
         alert("제일 첫번째 장입니다.");
         numberOfpages++;
     } else {
